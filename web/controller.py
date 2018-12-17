@@ -123,6 +123,9 @@ def updateMob():
     mob.short_desc = request.form.get('short_desc')
     mob.long_desc = request.form.get('long_desc')
     response = Mobresponses.query.filter_by(vnum=str(vnum)).first()
+    if response is None:
+        response = Mobresponses(vnum=vnum, response="")
+        db.session.add(response)
     response.response = request.form.get('response')
     db.session.commit()
     return render_template("mob.html", m=mob, r=response)
