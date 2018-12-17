@@ -132,7 +132,12 @@ class Mob(db.Model):
     def __repr__(self):
         return "<Name: {}>".format(self.name)
 
+class Mobresponses(db.Model):
+    vnum = db.Column(db.Integer, unique=True, nullable=False, primary_key=True)
+    response = db.Column(db.String())
 
+    def __repr__(self):
+        return "<Vnum: {}>".format(self.vnum)
 
 
 

@@ -1,5 +1,5 @@
 import auth
-from model import Player, Wizdata, Account, Room, Zone, Mob
+from model import Player, Wizdata, Account, Room, Zone, Mob, Mobresponses
 from main import app, db
 
 from flask import render_template, request, session
@@ -105,7 +105,8 @@ def mob(vnum):
         return render_template("badaccess.html")
 
     mob = Mob.query.filter_by(vnum=str(vnum)).first()
-    return render_template("mob.html", m=mob)
+    response = Mobresponses.query.filter_by(vnum=str(vnum)).first()
+    return render_template("mob.html", m=mob, r=response)
 
 @app.route("/updatemob", methods=['POST'])
 @auth.requires_auth
@@ -121,5 +122,7 @@ def updateMob():
     mob.name = request.form.get('name')
     mob.short_desc = request.form.get('short_desc')
     mob.long_desc = request.form.get('long_desc')
+    response = Mobresponses.query.filter_by(vnum=str(vnum)).first()
+    response.response = request.form.get('response')
     db.session.commit()
-    return render_template("mob.html", m=mob)
+    return render_template("mob.html", m=mob, r=response)
