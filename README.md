@@ -12,6 +12,8 @@ Instructions
   >
   >     + sneezy_host         = db
   >     + immortal_host       = db
+1. Put in your own secret key in `main.py`!  Failure to do this could allow a malicious builder to change things 
+    they're not supposed to.
 1. 1. `docker-compose down`
    1. `docker-compose build (optionally --no-cache if editing build system files)`
    1. `docker-compose up`

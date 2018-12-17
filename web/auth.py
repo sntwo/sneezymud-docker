@@ -3,7 +3,8 @@ import model
 
 import crypt
 import functools
-from flask import request, Response
+from flask import request, Response, session
+from sqlalchemy.sql import text
 
 
 def check_auth(username, password):
