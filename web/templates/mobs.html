@@ -10,10 +10,10 @@
             <th>Vnum</th>
             <th>Name</th>
         </tr>
-        {% for room in rooms %}
+        {% for mob in mobs %}
         <tr>
-           <td><a href="{{ url_for('rooms') }}/{{room.vnum}}">{{room.vnum}}</a></td>
-           <td>{{room.name}}</td>
+           <td><a href="{{ url_for('mobs') }}/{{mob.vnum}}">{{mob.vnum}}</a></td>
+           <td>{{mob.name}}</td>
         </tr>
         {% endfor %}
         </table>

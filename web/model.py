@@ -2,7 +2,6 @@ from main import db
 
 from flask_sqlalchemy import SQLAlchemy
 
-
 class Zone(db.Model):
     zone_nr = db.Column(db.Integer, unique=True, nullable=False, primary_key=True)
     zone_name = db.Column(db.String(255), unique=True, nullable=False)
@@ -82,3 +81,59 @@ class Player(db.Model):
 
     def __repr__(self):
         return "<Name: {}>".format(self.name)
+
+
+class Mob(db.Model):
+    vnum = db.Column(db.Integer, unique=True, nullable=False, primary_key=True)
+    name = db.Column(db.String(127))
+    short_desc = db.Column(db.String(127))
+    long_desc = db.Column(db.String(255))
+    description = db.Column(db.String())
+    actions = db.Column(db.Integer)
+    affects = db.Column(db.Integer)
+    faction = db.Column(db.Integer)
+    fact_perc = db.Column(db.Integer)
+    letter = db.Column(db.String())
+    attacks = db.Column(db.Float)
+    class_ = db.Column('class', db.Integer)
+    level = db.Column(db.Integer)
+    tohit = db.Column(db.Integer)
+    ac = db.Column(db.Float)
+    hpbonus = db.Column(db.Float)
+    damage_level = db.Column(db.Float)
+    damage_precision = db.Column(db.Integer)
+    gold = db.Column(db.Integer)
+    race = db.Column(db.Integer)
+    weight = db.Column(db.Integer)
+    height = db.Column(db.Integer)
+    str_ = db.Column('str', db.Integer)
+    bra = db.Column(db.Integer)
+    con = db.Column(db.Integer)
+    dex = db.Column(db.Integer)
+    agi = db.Column(db.Integer)
+    intel = db.Column(db.Integer)
+    wis = db.Column(db.Integer)
+    foc = db.Column(db.Integer)
+    per = db.Column(db.Integer)
+    cha = db.Column(db.Integer)
+    kar = db.Column(db.Integer)
+    spe = db.Column(db.Integer)
+    pos = db.Column(db.Integer)
+    def_position = db.Column(db.Integer)
+    sex = db.Column(db.Integer)
+    spec_proc = db.Column(db.Integer)
+    skin = db.Column(db.Integer)
+    vision = db.Column(db.Integer)
+    can_be_seen = db.Column(db.Integer)
+    max_exist = db.Column(db.Integer)
+    local_sound = db.Column(db.String())
+    adjacent_sound = db.Column(db.String())
+
+    def __repr__(self):
+        return "<Name: {}>".format(self.name)
+
+
+
+
+
+

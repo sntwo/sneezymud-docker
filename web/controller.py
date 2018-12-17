@@ -1,5 +1,5 @@
 import auth
-from model import Player, Wizdata, Account, Room, Zone
+from model import Player, Wizdata, Account, Room, Zone, Mob
 from main import app, db
 
 from flask import render_template, request, session
@@ -32,6 +32,7 @@ def zones():
     zones = Zone.query.all()
     return render_template("zones.html", zones=zones)
 
+#Rooms
 
 @app.route("/rooms")
 @auth.requires_auth
@@ -81,3 +82,44 @@ def updateRoom():
     room.description = request.form.get('description')
     db.session.commit()
     return render_template("room.html", r=room)
+
+#Mobs
+
+@app.route("/mobs")
+@auth.requires_auth
+def mobs():
+    res = db.session.get_bind().execute(text("""
+        select m.vnum, m.name
+        from mob m where (m.vnum between :bStart and :bEnd or m.vnum between :aStart and :aEnd)
+        """), bStart=session['bStart'], bEnd=session['bEnd'], 
+        aStart=session['aStart'], aEnd=session['aEnd'])
+    return render_template("mobs.html", mobs=res)
+
+@app.route("/mobs/<int:vnum>")
+@auth.requires_auth
+def mob(vnum):
+    #check if they can access this vnum
+    if not (session['bStart'] <= vnum <= session['bEnd']
+        or session['aStart'] <= vnum <= session['aEnd']
+        or vnum == session['office']):
+        return render_template("badaccess.html")
+
+    mob = Mob.query.filter_by(vnum=str(vnum)).first()
+    return render_template("mob.html", m=mob)
+
+@app.route("/updatemob", methods=['POST'])
+@auth.requires_auth
+def updateMob():
+    vnum = int(request.form.get('vnum'))
+    #check if they can access this vnum
+    if not (session['bStart'] <= vnum <= session['bEnd']
+        or session['aStart'] <= vnum <= session['aEnd']
+        or vnum == session['office']):
+        return render_template("badaccess.html")
+    
+    mob = Mob.query.filter_by(vnum=str(vnum)).first()
+    mob.name = request.form.get('name')
+    mob.short_desc = request.form.get('short_desc')
+    mob.long_desc = request.form.get('long_desc')
+    db.session.commit()
+    return render_template("mob.html", m=mob)
