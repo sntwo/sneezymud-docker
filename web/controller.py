@@ -1,5 +1,5 @@
 import auth
-from model import Player, Wizdata, Account, Room, Zone, Mob, Mobresponses
+from model import Player, Wizdata, Account, Room, Zone, Mob, Mobresponses, Roomexit
 from main import app, db
 
 from flask import render_template, request, session
@@ -65,7 +65,11 @@ def room(vnum):
         return render_template("badaccess.html")
 
     room = Room.query.filter_by(vnum=str(vnum)).first()
-    return render_template("room.html", r=room)
+    exits = db.session.query(Roomexit).filter_by(vnum=str(vnum))
+    exitnames = list()
+    for e in exits:
+        exitnames.append(Room.query.filter_by(vnum=e.destination).first().name)
+    return render_template("room.html", r=room, e=zip(exits,exitnames))
 
 @app.route("/updateroom", methods=['POST'])
 @auth.requires_auth
@@ -81,7 +85,11 @@ def updateRoom():
     room.name = request.form.get('name')
     room.description = request.form.get('description')
     db.session.commit()
-    return render_template("room.html", r=room)
+    exits = db.session.query(Roomexit).filter_by(vnum=str(vnum))
+    exitnames = list()
+    for e in exits:
+        exitnames.append(Room.query.filter_by(vnum=e.destination).first().name)
+    return render_template("room.html", r=room, e=zip(exits,exitnames))
 
 #Mobs
 

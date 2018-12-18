@@ -24,6 +24,19 @@
             <br><textarea name="name" rows="1" cols="80">{{r.name}}</textarea><br>
             Description:
             <br><textarea name="description" id="description" rows="15" cols="80">{{r.description}}</textarea><br>
+            <fieldset>
+                <legend>Exits:</legend>
+                <table>
+                    {% for exit, ename in e %}
+                    <tr>
+                        <td>Direction:</td><td>{{exit.direction}}</td>
+                        <td>Vnum:</td><td>{{exit.destination}}</td>
+                        <td>{{ename}}</td><td><button type="button" onclick="">Delete(not enabled yet)</button></td>
+
+                    </tr>
+                    {% endfor %}
+                </table>
+            </fieldset>
             <button type="button" onclick="preview()">Preview</button>
             <input type="submit" value="Submit">
         </fieldset>

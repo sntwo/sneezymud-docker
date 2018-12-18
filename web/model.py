@@ -67,6 +67,21 @@ class Room(db.Model):
     def __repr__(self):
         return "<Name: {}>".format(self.name)
 
+class Roomexit(db.Model):
+    vnum = db.Column(db.Integer, primary_key=True)
+    direction = db.Column(db.Integer)
+    name = db.Column(db.String(127))
+    description = db.Column(db.String())
+    type_ = db.Column('type', db.Integer)
+    condition_flag = db.Column(db.Integer)
+    lock_difficulty = db.Column(db.Integer)
+    weight = db.Column(db.Integer)
+    key_num = db.Column(db.Integer)
+    destination = db.Column(db.Integer, primary_key=True)
+
+    def __repr__(self):
+        return "<Name: {}>".format(self.name)
+
 class Player(db.Model):
     id = db.Column(db.Integer, unique=True, nullable=False, primary_key=True)
     name = db.Column(db.String(80))
