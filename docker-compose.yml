@@ -30,6 +30,17 @@ services:
       - .:/home/sneezy/sneezymud-docker
     restart: always
 
+  web-frontend:
+    build: ./web/frontend
+    ports:
+      - 3000:3000
+    volumes:
+      - './web/frontend:/app'
+      - '/app/node_modules'
+    environment:
+      - NODE_ENV=development
+
+
     #  web:
     #    build:
     #      context: ./web
