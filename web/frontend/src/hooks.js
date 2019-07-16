@@ -7,15 +7,15 @@ function useFetch(url) {
 
   async function fetchUrl() {
     const response = await fetch(url);
-    //const json = await response.json();
-    const text = await response.text();
-    setData(text);
+    const json = await response.json();
+    //const text = await response.text();
+    setData(json);
     setLoading(false);
   }
 
   useEffect(() => {
     fetchUrl();
-  }, [fetchUrl]);
+  }, []);
 
   return [data, loading];
 

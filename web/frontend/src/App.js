@@ -13,22 +13,16 @@ function App() {
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        SneezyMUD... under construction
       </header>
       {loading ? (
         "Loading..."
       ) : (
-        <p>{data}</p>
+        <div> <h2>Zones</h2>
+          <ul>
+            {data.map(z => <li>{z.zone_name}</li>)}
+          </ul>
+        </div>
       )}
     </div>
   );
