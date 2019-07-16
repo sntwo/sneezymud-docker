@@ -1,4 +1,4 @@
-version: '2'
+version: '3'
  
 services:
   db:
@@ -40,17 +40,13 @@ services:
     environment:
       - NODE_ENV=development
 
+  web-backend:
+    build: ./web/backend
+    ports:
+      - 3001:3001
+    volumes:
+      - './web/backend:/app'
+      - '/app/node_modules'
 
-    #  web:
-    #    build:
-    #      context: ./web
-    #      dockerfile: web_Dockerfile
-    #    ports:
-    #        - "5001:5000"
-    #    volumes:
-    #        - ./web:/code
-    #    depends_on:
-    #        - db
-    #    restart: always
 volumes:
   sneezydb:
