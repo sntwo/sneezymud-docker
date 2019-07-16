@@ -1,8 +1,14 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
+import { useFetch } from "./hooks";
 
 function App() {
+
+  const [data, loading] = useFetch(
+    'http://localhost:3001/testAPI'
+  );
+
   return (
     <div className="App">
       <header className="App-header">
@@ -19,6 +25,11 @@ function App() {
           Learn React
         </a>
       </header>
+      {loading ? (
+        "Loading..."
+      ) : (
+        <p>{data}</p>
+      )}
     </div>
   );
 }
