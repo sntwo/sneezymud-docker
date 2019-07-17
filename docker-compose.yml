@@ -39,6 +39,9 @@ services:
       - '/app/node_modules'
     environment:
       - NODE_ENV=development
+    restart: always
+    depends_on:
+      - web-backend
 
   web-backend:
     build: ./web/backend
@@ -47,6 +50,9 @@ services:
     volumes:
       - './web/backend:/app'
       - '/app/node_modules'
+    restart: always
+    depends_on:
+      - db
 
 volumes:
   sneezydb:
