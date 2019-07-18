@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import { useFetch } from "./hooks";
+import LogForm from './login';
 
 function App() {
 
@@ -9,11 +10,14 @@ function App() {
     'http://localhost:3001/testAPI'
   );
 
+  const [authUser, setAuthUser] = useState([]);
+
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        SneezyMUD... under construction
+        <div className="Header-left"><img src={logo} className="App-logo" alt="logo" /></div>
+        <div className="Header-center">SneezyMUD... under construction</div>
+        <LogForm authUser={authUser} setAuthUser={setAuthUser}/>
       </header>
       {loading ? (
         "Loading..."
