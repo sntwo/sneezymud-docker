@@ -46,6 +46,56 @@ app.get('/logout', (req, res) => {
   req.session.blocks = [];
 })
 
+app.get('/zone/:id', (req, res) => {
+  console.log("asked backend for ", req.params.id);
+  const query = `
+      SELECT * FROM zone WHERE zone_nr = ?; 
+    `;
+  queryDB(query,[req.params.id], (data) => { 
+    res.send(data[0])
+  });
+});
+
+app.get('/mob/:id', (req, res) => {
+  console.log("asked backend for ", req.params.id);
+  const query = `
+      SELECT m.short_desc, m.vnum, m.level, r.response
+      FROM mob m
+      LEFT OUTER JOIN mobresponses r ON m.vnum = r.vnum
+      WHERE m.vnum = ?;
+    `;
+  queryDB(query,[req.params.id], (data) => { 
+    res.send(data[0])
+  });
+});
+
+app.get('/mobs/:id', (req, res) => {
+  console.log("asked backend for ", req.params.id);
+  const query = `
+      SELECT m.short_desc, m.vnum, m.level, z.bottom, z.top, r.response
+      FROM mob m
+      INNER JOIN zone z ON m.vnum BETWEEN z.bottom AND z.top
+      LEFT OUTER JOIN mobresponses r ON m.vnum = r.vnum
+      WHERE z.zone_nr = ?;
+    `;
+  queryDB(query,[req.params.id], (data) => { 
+    res.send(data)
+  });
+});
+
+app.get('/objs/:id', (req, res) => {
+  console.log("asked backend for ", req.params.id);
+  const query = `
+      SELECT o.short_desc, o.vnum, o.type, o.val1, z.bottom, z.top
+      FROM obj o
+      INNER JOIN zone z ON o.vnum BETWEEN z.bottom AND z.top
+      WHERE z.zone_nr = ?;
+    `;
+  queryDB(query,[req.params.id], (data) => { 
+    res.send(data)
+  });
+});
+
 // The authorization strategy here is to give the client a cookie which 
 // is used to reference server side data.  This data is held in memory so this
 // is not a very scalable system; ideally we would make a new table in the db 
